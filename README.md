@@ -3,18 +3,21 @@ This repository contains instructions and codes to visualise the movement of a U
 ## Communication between UR5 and VR-Headset in a nutshell
 > A detailed step by step instruction is provided in the tutorials folder.
 ### Connecting UR5 to ROS
-The robot is connected to a PC running [ROS](https://wiki.ros.org/noetic) (referred to as ROS-PC in this repository). The [ur_robot_driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver) is used to establish the communication between the robot and ROS. RViz is then used to visualise the current position of the UR5. With MoveIt! running in the background, the interactive marker at the TCP of the robot can be moved to a new position to set the goal position of the robot. At this stage, by clicking on *plan & execute* on RViz, ROS sends the goal position to the robot controller, which then plans a path and moves the joints of the robot. During this movement, the controller streams the joint values (position, velocity and acceleration of each joint) to ROS, which are used to represent the movement of the robot in RViz.
+The robot is connected to a PC running [ROS](https://wiki.ros.org/noetic) (referred to as ROS-PC in this repository). The [Universal_Robots_ROS_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver) is used to establish the communication between the robot and ROS. RViz is then used to visualise the current position of the UR5. With MoveIt! running in the background, the interactive marker at the TCP of the robot can be moved to a new position to set the goal position of the robot. 
 
-This connection between UR5 and ROS has been fully implemented in the previously mentioned [Universal_Robots_ROS_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver) repository which also includes detailed description on the connection between the robot and ROS.
+At this stage, by clicking on *plan & execute* on RViz, ROS sends the goal position to the robot controller, which then plans a path and moves the joints of the robot. During this movement, the controller streams the joint values (position, velocity and acceleration of each joint) to ROS, which are used to represent the movement of the robot in RViz.
+
+This connection between UR5 and ROS has been fully implemented in the previously mentioned [Universal_Robots_ROS_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver) repository which also includes detailed description on establishing this connection.
 
 After establishing the connection between UR5 and ROS, a communication between ROS and Unity has to be established.
 ### Connecting ROS to Unity within the ROS-PC
->This step describes how to connect ROS to Unity, and thus visualise the robot in Unity. But for viewing this robot in a VR headset, this step might not be sufficient for many users. The reason for this is two fold:
+>This step describes how to connect ROS to Unity, and thus visualise the robot in Unity. This Unity scene can then be displayed on a VR-headset. But installing Unity on the ROS-PC might not provide all users with the capability of viewing the robot in VR. The reason for this is two fold:
 > - ROS usually runs on linux based systems. Many VR-headsets including the Meta Quest series do not have an official SDK for linux environment. This means, you can visualise the robot in Unity, but you might not be able to connect the VR-headset to unity.
 > - The ROS-PC might not be VR ready: to view a Unity scene directly on a VR-headset, the PC running Unity should have high enough [specifications](https://help.irisvr.com/hc/en-us/articles/213711747-Recommended-VR-Ready-Computers).
 >
-> To solve these issues, the ROS-PC can be connected to a VR-ready PC (named Unity-PC in the repository) through an ethernet cable or router. The information regarding joint angles can then be sent from the ROS-PC to the Unity-PC to be processed in Unity. This processed information is used to manipulate the virtual robot in Unity and can thus be displayed on any VR headset.
-> *In this section, Unity is installed inside the ROS-PC (linux) to visualise UR5. The next step describes installing Unity on the Unity-PC and the connection between the two PCs.
+> To solve these issues, the ROS-PC can be connected to a second VR-ready PC (named Unity-PC in the repository) through an ethernet cable or a router. The information regarding robot joints can then be sent from the ROS-PC to the Unity-PC to be processed in Unity. This processed information is used to manipulate the virtual robot in Unity. Since the Unity-PC is running on windows and is VR-Ready, it can display this scene with the robot on any VR-headset.
+>
+> *Inspite of this, in this section, Unity is installed inside the ROS-PC (linux) to visualise UR5. The next sections describe installing Unity on the Unity-PC and the connection between the two PCs. This makes it easier to debug the system, since the communication between two PCs are not easy to establish*.
 
 The [Unity-Robotics-Hub](https://github.com/Unity-Technologies/Unity-Robotics-Hub) package provides the codes and instructions to establish a communication between ROS and Unity. After going through the [*Quick Installation Instructions*](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/quick_setup.md) and the Part 0, Part 1 and Part 2 of the [*Pick-and-Place Tutorial*](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/pick_and_place/README.md), a Niryo robot can be visualised in Unity and controlled using ROS.
 
@@ -27,12 +30,14 @@ In order to visualise the UR5 in Unity
    - Select the robot and change the Y position to 0.63 to place it on the table
    - Select and and check the option *immovable* to fix the robot.
    - Follow all the remaining steps from the above mentioned tutorial to control each axis of the robot using the arrow keys.
-- Follow the [Part 2: ROS–Unity Integration](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/pick_and_place/0_ros_setup.md) until step 5 of *The Unity Side*.
-  - Copy the ROSController and ROSJoint scripts from this repository to the Scripts folder in the Unity Package.
-  - Attach the ROSController script to the robot and delete the Controller script from the robot.
-- Copy the package in this repository to your catkin_ws/src and run catkin_make.
-- After connecting the UR5 to ROS as mentioned in the previous section (robot connected to ROS-PC, ur_robot_driver and moveit running in background and robot visualised in RViz), run the following command in a new terminal
+- Follow the [Part 2: ROS–Unity Integration](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/pick_and_place/0_ros_setup.md) until step 5 of *The Unity Side*. Afterwards:
+  - Copy the *ROSController* and *ROSJoint* scripts from this repository to the Scripts folder in the Unity Package.
+  - Attach the *ROSController* script to the robot and delete the *Controller* script from the robot.
+- For setting up your ROS side, copy the package in this repository to your catkin_ws/src and run catkin_make.
+- After connecting the UR5 to ROS as mentioned in the previous section (robot connected to ROS-PC, *ur_robot_driver* and *MoveIt!* running in background and robot visualised in RViz), run the following command in a new terminal
     ```bash
    roslaunch niryo_moveit part_2.launch tcp_ip:=127.0.0.1 tcp_port:=10005
    ```
-  You should now see the UR5 in Unity move to the position of the robot on the ROS-side.
+  Once you click *play* on Unity, you should see the UR5 in Unity move to the position of the robot on the ROS-side.
+
+Move the robot using RViz and then clicking on *plan & execute*. This results in the robot moving to the target position. The virtual robot in Unity copies the same path
