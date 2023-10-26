@@ -41,3 +41,18 @@ In order to visualise the UR5 in Unity
   Once you click *play* on Unity, you should see the UR5 in Unity move to the position of the robot on the ROS-side.
 
 Move the robot using RViz and then clicking on *plan & execute*. This results in the robot moving to the target position. The virtual robot in Unity copies the same path
+### Connecting ROS to Unity installed on another PC
+> This section does EXACTLY what was done in the previous section, except on a different PC. At the end of the section, you can visualise the UR5 in Unity running on the Unity-PC that is connected to ROS-PC via ethernet cable.
+
+As mentioned in the previous section, Unity has to be installed on a seperate VR-Ready PC running windows. In order to visualise the UR5 in ROS
+- Install Unity on the Unity-PC and repeat all steps done on Unity from the previous sections.
+- On the drop down menu, type the IP address of the ROS-PC and click play.
+- On the ROS-PC. connect UR5 to ROS and run the follwing command on a new terminal
+     ```bash
+   roslaunch niryo_moveit part_2.launch tcp_ip:=127.0.0.1 tcp_port:=10005
+   ```
+You should now see the UR5 in Unity move to the position of the robot on the ROS-side.
+
+### Connecting Unity to VR-headset
+Now you have a Unity scene containing the model of UR5 which follows the motion of the real robot. By connecting this Unity scene to a VR headset, you can visualise the robot movement in VR. For that, follow the [tutorial](https://youtu.be/HhtTtvBF5bI) for the first 10 minutes, but inside the scene involving the robot. You should now be able to see the robot moving in the VR headset.
+
