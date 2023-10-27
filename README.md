@@ -55,7 +55,7 @@ In order to visualise the UR5 in Unity
 
 Move the robot using RViz and then clicking on *plan & execute*. This results in the robot moving to the target position. The virtual robot in Unity copies the same path
 ### Connecting ROS to Unity installed on another PC
-> This section does EXACTLY what was done in the previous section, except on a different PC. At the end of the section, you can visualise the UR5 in Unity running on the Unity-PC that is connected to ROS-PC via ethernet cable.
+> This section does EXACTLY what was done in the previous section, except that Unity will be running on a seperate PC. At the end of the section, you can visualise the UR5 in Unity running on the Unity-PC that is connected to ROS-PC via ethernet cable.
 
 As mentioned in the previous section, Unity has to be installed on a seperate VR-Ready PC running windows. In order to visualise the UR5 in ROS
 - Install Unity on the Unity-PC and repeat all steps done on Unity from the previous sections.
