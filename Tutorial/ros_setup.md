@@ -52,7 +52,8 @@ From the [Unity-Robotics-Hub](https://github.com/Unity-Technologies/Unity-Roboti
 
 # Install some packages
  sudo apt-get install python-pip ros-melodic-robot-state-publisher ros-melodic-moveit ros-melodic-rosbridge-suite ros-melodic-joy ros-melodic-ros-control ros-melodic-ros-controllers ros-melodic-tf2-web-republisher
-sudo -H pip install rospkg jsonpickle
+
+ sudo -H pip install rospkg jsonpickle
 
 # build the workspace and source it
  catkin_make && source devel/setup.bash
@@ -147,9 +148,15 @@ roslaunch ur_robot_driver ur5_bringup.launch robot_ip:=192.168.56.101 kinematics
 
 Now you should be able to move the interactive marker on the Robot in RViz and click on *plan & execute* to see the robot moving.
 
-Open a new terminal and type
+After establishing connection between ROS and UR5, the joint states of the robot should be sent to unity. For that, open a new terminal and type
+
 ```bash
-# program to establish
-roslaunch ur_robot_driver ur5_bringup.launch robot_ip:=192.168.56.101 kinematics_config:=${HOME}/my_robot_calibration.yaml
+# program to establish connection with Unity
+ roslaunch ros_tcp_endpoint endpoint.launch
+
+# program that reads joint state values from /tf topics, packs it into *RobotTrajectory.msg* message and sends it to Unity
+ rosrun ur_robot_driver unityconnect.py
 
 ```
+
+If you press play on Unity, you should now see the UR5 in Unity follwing the path of the robot.
