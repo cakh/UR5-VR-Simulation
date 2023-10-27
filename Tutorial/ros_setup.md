@@ -38,7 +38,7 @@ copy the file [*unityconnect.py*](https://github.com/cakh/UR5-VR-Simulation/blob
 ```
 Now you have the catkin package with all the required packages on your ROS side.
 
-## Step 2: Setup Unity in ROS-PC
+## Step 2: Control the robot in Unity
 > As mentioned in [Readme.md](https://github.com/cakh/UR5-VR-Simulation/blob/main/README.md), Unity is set up in the ROS-PC to test if it is working. Afterwards, another Unity-PC is set up with Unity installed in it and connected to ROS-PC via ethernet or router.
 
 1. Download and install [Unity Hub](https://docs.unity3d.com/2020.1/Documentation/Manual/GettingStartedInstallingHub.html) from the official website and add a new project. Select the options as seen in the follwing image:
@@ -73,6 +73,18 @@ Upon creating this project, you will see an empty scene in Unity.
 7. Expand ur5_robot and Click on *base_link*. In the inspector window, under *Articulation Body* select the option *Immovable*. Repeat this step for *base_link_inertia*.
    ![immovable](https://github.com/cakh/UR5-VR-Simulation/assets/64953988/4f9cafe9-2e7f-4f98-bc74-d4c8311b6d2a)
 
-8. From Unity_Scene/Scripts in this repository, copy the file *RosController.cs* to your assets in Unity workspace.
+8. Select ur5_robot again from the *Hierrachy* window and under *inspection* in *Controller (script)* give the following values
+   ![image](https://github.com/cakh/UR5-VR-Simulation/assets/64953988/950858a7-e1a7-4b6f-9865-42ef198b6008)
 
+   If you click on play, you will be able to now move the robot with your arrow keys!
+![robomove](https://github.com/cakh/UR5-VR-Simulation/assets/64953988/6b6f474a-41d6-4565-aa88-ec82ac1f564e)
+
+
+
+## Step 3: Connect Unity with ROS
+
+Now that UR5 is imported in Unity and can be controlled with arrow keys, we need to establish a connection between Unity and ROS so that this Unity scene can subscribe to a ros topic that streams joint state values (position, velocity acceleration etc.). This is achieved by replacing the *Controller (script)* attached to *ur5_robot* with a custom controller. Since this custom controller (included in this package) uses several ROS messages, these ROS messages should be installed in Unity.
+
+### Install ROS messages in Unity
+1.
 
