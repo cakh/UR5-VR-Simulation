@@ -17,9 +17,22 @@ After establishing the connection between UR5 and ROS, a communication between R
 >
 > To solve these issues, the ROS-PC can be connected to a second VR-ready PC (named Unity-PC in the repository) through an ethernet cable or a router. The information regarding robot joints can then be sent from the ROS-PC to the Unity-PC to be processed in Unity. This processed information is used to manipulate the virtual robot in Unity. Since the Unity-PC is running on windows and is VR-Ready, it can display this scene with the robot on any VR-headset.
 >
-> *Inspite of this, in this section, Unity is installed inside the ROS-PC (linux) to visualise UR5. The next sections describe installing Unity on the Unity-PC and the connection between the two PCs. This makes it easier to debug the system, since the communication between two PCs are not easy to establish*.
+> *Inspite of this, in this section, Unity is installed inside the ROS-PC (linux) to visualise UR5. The following sections will describe installing Unity on the Unity-PC and the connection between the two PCs. This is done in order to make it easy to debug, as the connection between Unity-PC and ROS-PC can be complicated*.
 
 The [Unity-Robotics-Hub](https://github.com/Unity-Technologies/Unity-Robotics-Hub) package provides the codes and instructions to establish a communication between ROS and Unity. After going through the [*Quick Installation Instructions*](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/quick_setup.md) and the Part 0, Part 1 and Part 2 of the [*Pick-and-Place Tutorial*](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/pick_and_place/README.md), a Niryo robot can be visualised in Unity and controlled using ROS.
+#### Unity Side
+In order to visualise the UR5 in Unity, copy the folder *UR5_URDF* from this repository to the Unity workspace and import *ur5.urdf*. With the robot in the Unity scene, the links *base* and *base_link_inertia* can be set to *immovable* to fix the robot in the scene. On clicking *play*, you will be able to control the joints using arrow keys.
+
+The *Controller.cs* script which is by default attached to the robot allows you to control it using arrow keys. To control the robot over ROS, this repository provides a custom controller, *RosController.cs*. Copy all the scripts from */Unity_Scene/Scripts* from this repository to your unity workspace and attach *RosController.cs* to your robot (the default *Controller.cs* should be deleted from the robot).
+
+The *RosController.cs* subscribes to a topic */joint_pos* on the ROS side. ROS publisher the joint states of the robot to this topic in a message of type [moveit_msgs/RobotTrajectory](http://docs.ros.org/en/noetic/api/moveit_msgs/html/msg/RobotTrajectory.html). Now that the Unity side has been set up, ROS has to be configured.
+
+#### ROS side
+> It is assumed that you have installed all the previously mentioned ROS packages and have successfully set up the connection between ROS and UR5 as mentioned in [Universal_Robots_ROS_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver)
+
+Copy the python script *UnityControl.py* from this repository to */catkin_ws/src/Universal_Robots_ROS_Driver/ur_robot_driver/scripts* and make it executable. Establish the connection between the robot and ROS so that you can move the robot using MoveIt! (for instance, you can move the interactive marker in RViz and click on *plan & execute* to move the robot). On a new terminal, run the newly copied *UnityControl.py*. This will start a node that publishes the current joint states of the robot to a */joint_pos* topic that the Unity script can subscribe to.
+
+On the Unity side, click play. The robot in Unity should now move to the position of the real robot!
 
 In order to visualise the UR5 in Unity
 - Open a new unity project and do the [Quick Installation Instructions](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/quick_setup.md) from Unity-Robotics-Hub package.
