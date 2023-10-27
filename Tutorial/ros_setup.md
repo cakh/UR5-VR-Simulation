@@ -38,6 +38,26 @@ copy the file [*unityconnect.py*](https://github.com/cakh/UR5-VR-Simulation/blob
 # make the file executable
  chmod +x unityconnect.py
 ```
+From the [Unity-Robotics-Hub](https://github.com/Unity-Technologies/Unity-Robotics-Hub) package, copy the folder [ROS](https://github.com/cakh/Unity-Robotics-Hub/tree/main/tutorials/pick_and_place/ROS) under `/PATH/TO/Unity-Robotics-Hub/tutorials/pick_and_place/ROS` to `/home/<user>/catkin_ws/src` in your ROS-PC. Open a new terminal and type:
+
+```bash
+# source global ros
+ source /opt/ros/melodic/setup.bash
+
+# naviage to catkin workspace
+ cd catkin_ws
+
+# Update
+ sudo apt-get update && sudo apt-get upgrade
+
+# Install some packages
+ sudo apt-get install python-pip ros-melodic-robot-state-publisher ros-melodic-moveit ros-melodic-rosbridge-suite ros-melodic-joy ros-melodic-ros-control ros-melodic-ros-controllers ros-melodic-tf2-web-republisher
+sudo -H pip install rospkg jsonpickle
+
+# build the workspace and source it
+ catkin_make && source devel/setup.bash
+```
+
 Now you have the catkin package with all the required packages on your ROS side.
 
 ## Step 2: Control the robot in Unity
@@ -106,8 +126,30 @@ Now that UR5 is imported in Unity and can be controlled with arrow keys, we need
 
 Now the robot is ready to connect to ROS and receive messages. After setting up ROS (next step), you can press play on Unity and the robot in Unity will follow the real robot.
 
-## Connect UR5 to ROS
+## Step 4: Connect Robot to ROS
 > This step is done in ROS-PC and not Unity-PC
+All the steps to connect the robot to ROS are mentioned in the [Universal_Robots_ROS_Driver package](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver). Assuming all those steps are complete, enter the follwing code, each in a new terminal:
+
+> Do not forget to source your setup.bash!
 
 
+```bash
+# connect ROS with UR5 (replace robot_ip with the ip address of your robot)
+roslaunch ur_robot_driver ur5_bringup.launch robot_ip:=192.168.56.101 kinematics_config:=${HOME}/my_robot_calibration.yaml
 
+# start MoveIt!
+ roslaunch ur5_moveit_config moveit_planning_execution.launch limited:=true
+
+# view the robot in RViz
+ roslaunch ur5_moveit_config moveit_rviz.launch config:=true
+
+```
+
+Now you should be able to move the interactive marker on the Robot in RViz and click on *plan & execute* to see the robot moving.
+
+Open a new terminal and type
+```bash
+# program to establish
+roslaunch ur_robot_driver ur5_bringup.launch robot_ip:=192.168.56.101 kinematics_config:=${HOME}/my_robot_calibration.yaml
+
+```
