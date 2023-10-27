@@ -17,13 +17,10 @@ To make this catkin workspace and install the packages, in a new terminal enter:
  mkdir -p catkin_ws/src && cd catkin_ws
 
 # clone the Universal Robots ROS driver: The driver lets you communicate with the robot controller
- git clone https://github.com/cakh/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver
-
-# clone the robot description. It contains the URDF and visual info about the UR robots. Currently, it is necessary to use the melodic-devel-staging branch.
- git clone -b melodic-devel-staging https://github.com/cakh/universal_robot.git src/universal_robot
+sudo apt install ros-${ROS_DISTRO}-ur-robot-driver
 
 # clone ROS-TCP-Endpoint to connect ROS with Unity
- git clone https://github.com/Unity-Technologies/ROS-TCP-Endpoint
+ git clone https://github.com/Unity-Technologies/ROS-TCP-Endpoint src/ROS-TCP-Endpoint
 
 # install dependencies
  sudo apt update -qq
@@ -32,8 +29,11 @@ To make this catkin workspace and install the packages, in a new terminal enter:
 
 # build the workspace
  catkin_make
+
+# source the workspace
+ source devel/setup.bash
 ```
-copy the file [*unityconnect.py*](https://github.com/cakh/UR5-VR-Simulation/blob/main/ROS/Scripts/unityconnect.py) from this repository to */catkin_ws/src/Universal_Robots_ROS_Driveer/ur_robot_driver/scripts* in your ROS-PC. Inside the folder *scripts*, right click and select *Open in Terminal*. In this terminal, enter
+copy the file [*unityconnect.py*](https://github.com/cakh/UR5-VR-Simulation/blob/main/ROS/Scripts/unityconnect.py) from this repository to */catkin_ws/src/ROS-TCP-Endpoint* in your ROS-PC. Inside the folder *ROS-TCP-Endpoint*, right click and select *Open in Terminal*. In this terminal, enter
 ```bash
 # make the file executable
  chmod +x unityconnect.py
