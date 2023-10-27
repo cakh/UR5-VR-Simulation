@@ -12,12 +12,12 @@ namespace Unity.Robotics.UrdfImporter.Control
         public class RosController : MonoBehaviour
     {
         private ArticulationBody[] articulationChain;
-        public float stiffness;
-        public float damping;
-        public float forceLimit;
-        public float speed = 5f; // Units: degree/s
+        public float stiffness = 10000f;
+        public float damping = 100f;
+        public float forceLimit = 1000f;
+        public float speed = 30f; // Units: degree/s
         public float torque = 100f; // Units: Nm or N
-        public float acceleration = 5f;// Units: m/s^2 / degree/s^2
+        public float acceleration = 10f;// Units: m/s^2 / degree/s^2
         public ControlType control = ControlType.PositionControl;
         void Start()
         {
