@@ -1,4 +1,6 @@
-## Step 1: Setup ROS-PC
+## Step 1: Setup ROS workspace
+> This step is done in ROS-PC and not Unity-PC
+
 The ROS-PC should have Ubuntu as the operating system and should have ROS installed in it. [Here](http://wiki.ros.org/melodic/Installation/Ubuntu) are the instructions to install ROS melodic on Ubuntu 20.04.
 ### Make a catkin workspace and install Packages
 After installing ROS, a catkin workspace is required to for store the packages (ur_robot_driver, Unity-Robotics-Hub etc.).
@@ -39,6 +41,8 @@ copy the file [*unityconnect.py*](https://github.com/cakh/UR5-VR-Simulation/blob
 Now you have the catkin package with all the required packages on your ROS side.
 
 ## Step 2: Control the robot in Unity
+> This step is done in ROS-PC and not Unity-PC
+
 > As mentioned in [Readme.md](https://github.com/cakh/UR5-VR-Simulation/blob/main/README.md), Unity is set up in the ROS-PC to test if it is working. Afterwards, another Unity-PC is set up with Unity installed in it and connected to ROS-PC via ethernet or router.
 
 1. Download and install [Unity Hub](https://docs.unity3d.com/2020.1/Documentation/Manual/GettingStartedInstallingHub.html) from the official website and add a new project. Select the options as seen in the follwing image:
@@ -82,9 +86,28 @@ Upon creating this project, you will see an empty scene in Unity.
 
 
 ## Step 3: Connect Unity with ROS
+> This step is done in ROS-PC and not Unity-PC
 
 Now that UR5 is imported in Unity and can be controlled with arrow keys, we need to establish a connection between Unity and ROS so that this Unity scene can subscribe to a ros topic that streams joint state values (position, velocity acceleration etc.). This is achieved by replacing the *Controller (script)* attached to *ur5_robot* with a custom controller. Since this custom controller (included in this package) uses several ROS messages, these ROS messages should be installed in Unity.
 
 ### Install ROS messages in Unity
-1.
+1. After downloading this repository, locate the file *RobotTrajectory.msg* (UR5-VR-Simulation/Unity_Scene/ROS_Messages/RobotTrajectory.msg)
+2. In Unity, under *Robotics* menu, choose *Generate ROS Messages..*.
+3. Click on *browse* under *ROS Message Path* and go to the folder where the *RobotTrajectory.msg* is stored and click *open*.
+4. Click on *Build 1 msg* button to build the message
+   
+![rosmsg](https://github.com/cakh/UR5-VR-Simulation/assets/64953988/d54b3cb9-841d-4795-92c0-44be080494e0)
+
+### Attach custom controller to the robot
+1. Copy the [*RosController.cs*](https://github.com/cakh/UR5-VR-Simulation/blob/main/Unity_Scene/Scripts/RosController.cs) script from this repository to your Unity workspace and attach it to ur5_robot by drag and drop.
+2. Click on ur5_robot from *Hierarchy* window and delete the *Controller (script)* (the default controller) from the robot.
+3. From the *Project* window, navigate to *Packages -> URDF Importer -> Runtime -> Controller* and open *JointControl.cs* script.
+4. Replace the contents with the [*JointControl.cs* script in this repository](https://github.com/cakh/UR5-VR-Simulation/blob/main/Unity_Scene/Scripts/JointControl.cs).
+
+Now the robot is ready to connect to ROS and receive messages. After setting up ROS (next step), you can press play on Unity and the robot in Unity will follow the real robot.
+
+## Connect UR5 to ROS
+> This step is done in ROS-PC and not Unity-PC
+
+
 
