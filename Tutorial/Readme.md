@@ -92,13 +92,14 @@ Upon creating this project, you will see an empty scene in Unity.
    ![importrobo](https://github.com/cakh/UR5-VR-Simulation/assets/64953988/ce990168-7043-4595-b8a1-0a966b0cfdf3)
 
 5. Select the *Main Camera* and change its position to 0, 1, -0.7 and rotation to 45, 0, 0
+   
    <img src="https://github.com/cakh/UR5-VR-Simulation/assets/64953988/6cb00090-83da-45eb-82cc-212fc0324415" width="300">
 
-6. From the *Hierarchy* window, choose *ur5_robot*. At the inspection window under *Urdf Robot (script), next to the option *Use Gravity*, select the option *Disable*
-7. Expand ur5_robot and Click on *base_link*. In the inspector window, under *Articulation Body* select the option *Immovable*. Repeat this step for *base_link_inertia*.
+7. From the *Hierarchy* window, choose *ur5_robot*. At the inspection window under *Urdf Robot (script)*, next to the option *Use Gravity*, select the option *Disable*
+8. Expand ur5_robot and Click on *base*. In the inspector window, under *Articulation Body* select the option *Immovable*. Repeat this step for *base_link_inertia*.
    ![immovable](https://github.com/cakh/UR5-VR-Simulation/assets/64953988/4f9cafe9-2e7f-4f98-bc74-d4c8311b6d2a)
 
-8. Select ur5_robot again from the *Hierrachy* window and under *inspection* in *Controller (script)* give the following values
+9. Select ur5_robot again from the *Hierrachy* window and under *inspection* in *Controller (script)* give the following values
    ![image](https://github.com/cakh/UR5-VR-Simulation/assets/64953988/950858a7-e1a7-4b6f-9865-42ef198b6008)
 
    If you click on play, you will be able to now move the robot with your arrow keys!
