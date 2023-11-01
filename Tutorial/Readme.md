@@ -66,7 +66,7 @@ Now you have the catkin package with all the required packages on your ROS side.
 
 > As mentioned in [Readme.md](https://github.com/cakh/UR5-VR-Simulation/blob/main/README.md), Unity is set up in the ROS-PC to test if it is working. Afterwards, another Unity-PC is set up with Unity installed in it and connected to ROS-PC via ethernet or router.
 
-1. Download and install [Unity Hub](https://docs.unity3d.com/2020.1/Documentation/Manual/GettingStartedInstallingHub.html) from the official website and add a new project. Select the options as seen in the follwing image:
+1. Download and install [Unity Hub](https://docs.unity3d.com/2020.1/Documentation/Manual/GettingStartedInstallingHub.html) from the official website and add a new project. Select the options as seen in the following image:
 <div align="center">
     <img src="https://github.com/cakh/UR5-VR-Simulation/assets/64953988/7e88a02d-a31c-49e7-a091-e25d9e17a278" alt="Screenshot from 2023-10-27 15-00-10" width="600">
 </div>
